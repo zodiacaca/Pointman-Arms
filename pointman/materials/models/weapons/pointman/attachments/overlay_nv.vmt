@@ -1,0 +1,6 @@
+"Modulate"
+{
+	"$basetexture" "models\weapons\pointman\attachments\overlay_nv_clean"
+	"$translucent" "1"
+	"$additive" "1"
+}

@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/ptm/hands/harley_body_arms"
+	$bumpmap "models/weapons/ptm/hands/harley_body_arms_n"
+	
+	"$lightwarptexture" "models/weapons/ptm/hands/lightwarp_flesh"
+
+	"$detail" "models/weapons/ptm/hands/detail_skin"
+	"$detailscale" "20"
+	"$detailblendfactor" "0.98"
+	"$detailblendmode" "0"
+
+//	"$phong" "1"
+	"$phongexponent" "120"
+	"$phongtint" "[1 .1 .1]"
+	"$phongboost" "0.5"
+	"$phongfresnelranges" "[0.05 0.5 1]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "4"
+}

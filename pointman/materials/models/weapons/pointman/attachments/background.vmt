@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\weapons\pointman\attachments\background"
+	"$bumpmap"	"models\weapons\pointman\attachments\background_n"
+
+	"$halflambert" "1"
+
+	"$phong" "1"
+	"$phongexponent" "100"
+	"$phongboost" "0.1"
+	"$phongfresnelranges" "[0.05 0.5 1]"
+}

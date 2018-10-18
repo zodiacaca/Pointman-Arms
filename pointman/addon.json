@@ -1,0 +1,11 @@
+{
+	"title"		:	"Pointman Arms",
+	"type"		:	"weapon",
+	"tags"		:	[ "realism", "scenic" ],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*"
+	]
+}
