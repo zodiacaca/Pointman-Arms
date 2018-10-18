@@ -49,7 +49,7 @@ function Pointman_CalcView(ply, pos, ang, fov, nearz, farz)
 				local scale = ScrH()/900
 
 				local frqc = 1
-				local str =0/scale
+				local str = 0/scale
 				local str_r = 0
 
 				if ply:KeyDown(IN_SPEED) then

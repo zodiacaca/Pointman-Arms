@@ -30,7 +30,7 @@ SWEP.BobScale			= 0		-- disable default one
 SWEP.Spawnable			= true
 SWEP.AdminSpawnable	= true
 
-SWEP.Primary.Damage		= 300000
+SWEP.Primary.Damage		= 40
 SWEP.Primary.Spread		= 0.005			-- this gun uses a fine barrel
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.RPM			= 1300
@@ -451,18 +451,10 @@ function SWEP:SightConversion()
 				self:RecoverStamina(FT)
 			end
 		end
-		self.CurrentPos = LerpVector(self.SightSpeed * FT, self.CurrentPos, self.IronSightPos + Vector(0, 0, -len/self.Owner:GetWalkSpeed()))
+		self.CurrentPos = LerpVector(self.SightSpeed * FT, self.CurrentPos, self.IronSightPos)
 		self.CurrentAng= LerpVector(self.SightSpeed * FT, self.CurrentAng, self.IronSightAng)
 		self.SwayIntensity = self.IronSway
 		self.dt.StateLower = POINTMAN_ST_AIM
-	elseif self.Owner:Crouching() then
-		if CLIENT then
-			self:RecoverStamina(FT)
-		end
-		self.CurrentPos = LerpVector((self.SightSpeed - 3) * FT, self.CurrentPos, self.SprintSightPos)
-		self.CurrentAng = LerpVector((self.SightSpeed - 3) * FT, self.CurrentAng, self.SprintSightAng)
-		self.SwayIntensity = self.DefaultSway
-		self.dt.StateLower = POINTMAN_ST_LOW
 	elseif self.Owner:KeyDown(IN_SPEED) and len > 5 then
 		-- self:BreakReload()
 		if CLIENT then
@@ -486,7 +478,7 @@ function SWEP:SightConversion()
 				self:RecoverStamina(FT)
 			end
 		end
-		self.CurrentPos = LerpVector((self.SightSpeed - 1) * FT, self.CurrentPos, self.SightPos)
+		self.CurrentPos = LerpVector((self.SightSpeed - 1) * FT, self.CurrentPos, self.SightPos + Vector(0, 0, -len/self.Owner:GetWalkSpeed() * 0.5))
 		self.CurrentAng= LerpVector((self.SightSpeed - 1) * FT, self.CurrentAng, self.SightAng)
 		-- self.CurrentPos = LerpVector((self.SightSpeed - 1) * FT, self.CurrentPos, Vector(GetConVarNumber("par_adj1"), GetConVarNumber("par_adj2"), GetConVarNumber("par_adj3")))
 		-- self.CurrentAng= LerpVector((self.SightSpeed - 1) * FT, self.CurrentAng, Vector(GetConVarNumber("par_adj4"), GetConVarNumber("par_adj5"), GetConVarNumber("par_adj6")))

@@ -162,6 +162,9 @@ function SWEP:applyBob(pos, ang)
 	local rs = self.Owner:GetRunSpeed()
 
 	local mul = 1.9
+	if self.Owner:Crouching() then
+		mul = 30
+	end
 	local power = self.Owner:KeyDown(IN_WALK) and math.Clamp(len / rs * 3, 0, 0.8) or math.Clamp(len / rs * 3, 0, 1)
 	local base, add = 4.1, 2
 	if !self.Owner:KeyDown(IN_WALK) then
@@ -190,8 +193,8 @@ function SWEP:applyBob(pos, ang)
 		bob_half = Lerp(0.2 * FT, bob_half, math.abs(math.sin(math.sin(self.RunTime + delay))) - 0.6) * power
 	end
 
-	BobAng.x = BobAng.x - tan * 2.0 * power * mul / mulit_b * stm
-	BobAng.y = BobAng.y + sin * 1.9 * power * mul * mulit_b * stm
+	BobAng.x = BobAng.x - tan * 4.2 * power * mul / mulit_b * stm
+	BobAng.y = BobAng.y + sin * 1.8 * power * mul * mulit_b * stm
 	BobAng.z = BobAng.z - cos * 0.9 * power * mul * mulit_b * stm
 	if self.Side == 0 then
 		BobPos.x = BobPos.x + sin * 0.1 * power * mul / mulit_b * stm
@@ -200,7 +203,7 @@ function SWEP:applyBob(pos, ang)
 	if !self.Owner:KeyDown(IN_WALK) or self.Owner:Crouching() or self.Owner:KeyDown(IN_SPEED) then
 		BobPos.z = BobPos.z - bob_half * 0 * power * mul / mulit_b * stm
 	else
-		BobPos.z = BobPos.z - bob_half * 58 * power * mul / mulit_b * stm
+		BobPos.z = BobPos.z + bob_half * 62 * power * mul / mulit_b * stm
 	end
 
 	self.CurBobPos = self:LerpVectorLocal(FT * 14, self.CurBobPos, BobPos)
