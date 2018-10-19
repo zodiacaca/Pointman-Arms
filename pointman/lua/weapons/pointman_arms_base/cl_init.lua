@@ -41,40 +41,40 @@ function SWEP:CreateClientModels()
 	if self.Owner:IsPlayer() then
 
 		-- shadow
-		if not IsValid(ptm_cViewModel["Shadow"]) then
+		if not IsValid(ptm_cModel["Shadow"]) then
 
-			ptm_cViewModel["Shadow"] = ClientsideModel(self.Owner:GetModel(), RENDERGROUP_OPAQUE)
+			ptm_cModel["Shadow"] = ClientsideModel(self.Owner:GetModel(), RENDERGROUP_OPAQUE)
 
-			local mats = ptm_cViewModel["Shadow"]:GetMaterials()
+			local mats = ptm_cModel["Shadow"]:GetMaterials()
 			for k, v in pairs(mats) do
-				ptm_cViewModel["Shadow"]:SetSubMaterial( k - 1, "effects/pointman_transparent" )
+				ptm_cModel["Shadow"]:SetSubMaterial( k - 1, "effects/pointman_transparent" )
 			end
 
 		end
 
 		-- body
-		if not IsValid(ptm_cViewModel["Body"]) then
+		if not IsValid(ptm_cModel["Body"]) then
 
-			ptm_cViewModel["Body"] = ClientsideModel(self.Owner:GetModel(), RENDERGROUP_OPAQUE)
-			ptm_cViewModel["Body"]:DrawShadow(false)
-			ptm_cViewModel["Body"]:SetNoDraw(true)
+			ptm_cModel["Body"] = ClientsideModel(self.Owner:GetModel(), RENDERGROUP_OPAQUE)
+			ptm_cModel["Body"]:DrawShadow(false)
+			ptm_cModel["Body"]:SetNoDraw(true)
 
 		end
 
 		-- mask
-		if not IsValid(ptm_cViewModel["Mask"]) then
+		if not IsValid(ptm_cModel["Mask"]) then
 
-			ptm_cViewModel["Mask"] = ClientsideModel("models/weapons/v_ptm_gasmask.mdl", RENDERGROUP_VIEWMODEL)
-			ptm_cViewModel["Mask"]:DrawShadow(false)
-			ptm_cViewModel["Mask"]:SetNoDraw(true)
+			ptm_cModel["Mask"] = ClientsideModel("models/weapons/v_ptm_gasmask.mdl", RENDERGROUP_VIEWMODEL)
+			ptm_cModel["Mask"]:DrawShadow(false)
+			ptm_cModel["Mask"]:SetNoDraw(true)
 
 		end
 		
 		-- ghost
-		if not IsValid(ptm_cViewModel["Ghost"]) and GetConVar("PointmanToggleGlobal"):GetBool() then
+		if not IsValid(ptm_cModel["Ghost"]) and GetConVar("PointmanToggleGlobal"):GetBool() then
 
-			ptm_cViewModel["Ghost"] = ClientsideModel(self.Owner:GetViewModel():GetModel(), RENDERGROUP_VIEWMODEL)
-			ptm_cViewModel["Ghost"]:ResetSequence(ACT_VM_DRAW)
+			ptm_cModel["Ghost"] = ClientsideModel(self.Owner:GetViewModel():GetModel(), RENDERGROUP_VIEWMODEL)
+			ptm_cModel["Ghost"]:ResetSequence(ACT_VM_DRAW)
 
 		end
 
@@ -87,7 +87,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:RemoveClientModels()
 
-	for k, v in pairs(ptm_cViewModel) do
+	for k, v in pairs(ptm_cModel) do
 
 		if IsValid(v) then
 
@@ -169,29 +169,29 @@ end
 function SWEP:ViewModelDrawn()
 
 	-- mask
-	if self.Weapon:GetNWBool("Gasmask") and IsValid(ptm_cViewModel["Mask"]) then
+	if self.Weapon:GetNWBool("Gasmask") and IsValid(ptm_cModel["Mask"]) then
 
 		cam.IgnoreZ(true)
 
-			ptm_cViewModel["Mask"]:SetPos(self.FixedPos - self.Owner:EyeAngles():Forward() * 2.65 - self.Owner:EyeAngles():Up() * 0.25)
-			ptm_cViewModel["Mask"]:SetAngles(self.Owner:EyeAngles())
+			ptm_cModel["Mask"]:SetPos(self.FixedPos - self.Owner:EyeAngles():Forward() * 2.65 - self.Owner:EyeAngles():Up() * 0.25)
+			ptm_cModel["Mask"]:SetAngles(self.Owner:EyeAngles())
 
 			-- local settings = {
 				-- model = "models/weapons/v_ptm_gasmask.mdl",
 				-- pos = self.Owner:EyePos() - self.Owner:EyeAngles():Forward() * 2.65 - self.Owner:EyeAngles():Up() * 0.25,
 				-- angle = self.Owner:EyeAngles()
 				-- }
-			-- render.Model( settings, ptm_cViewModel["Mask"] )
+			-- render.Model( settings, ptm_cModel["Mask"] )
 
-			ptm_cViewModel["Mask"]:DrawModel()
+			ptm_cModel["Mask"]:DrawModel()
 
 	end
 	
 	-- ghost
-	if IsValid(ptm_cViewModel["Ghost"]) then
+	if IsValid(ptm_cModel["Ghost"]) then
 	
-		ptm_cViewModel["Ghost"]:SetPos(self.Owner:EyePos())
-		ptm_cViewModel["Ghost"]:SetAngles(self.Owner:EyeAngles())
+		ptm_cModel["Ghost"]:SetPos(self.Owner:EyePos())
+		ptm_cModel["Ghost"]:SetAngles(self.Owner:EyeAngles())
 		
 	end
 
@@ -202,14 +202,14 @@ local lastFrame = 0
 
 function SWEP:UpdateClientShadow()
 
-	if IsValid(ptm_cViewModel["Shadow"]) and IsValid(ptm_cViewModel["Body"]) then
+	if IsValid(ptm_cModel["Shadow"]) and IsValid(ptm_cModel["Body"]) then
 
 		local ang = self.Owner:EyeAngles()
 		ang.x = 0			-- control the model doesn't need angle x
 		local dir = ang:Forward()
-		ptm_cViewModel["Shadow"]:SetPos(self.Owner:GetPos() - dir * 16)
-		-- ptm_cViewModel["Shadow"]:SetPos(self.Owner:GetPos() + dir * 128)
-		ptm_cViewModel["Shadow"]:SetAngles(ang)
+		ptm_cModel["Shadow"]:SetPos(self.Owner:GetPos() - dir * 16)
+		-- ptm_cModel["Shadow"]:SetPos(self.Owner:GetPos() + dir * 128)
+		ptm_cModel["Shadow"]:SetAngles(ang)
 		
 		-- walk animation playback speed depends on the speed
 		local rate = 1
@@ -224,37 +224,37 @@ function SWEP:UpdateClientShadow()
 		local sequence = self.Owner:GetSequence()
 		local vm = self.Owner:GetViewModel()
 		if vm:GetSequenceActivityName(vm:GetSequence()) == "ACT_VM_RELOAD" then
-			sequence = ptm_cViewModel["Shadow"]:LookupSequence("reloadpistol")			-- can't set layer on client model, quite buggy though
+			sequence = ptm_cModel["Shadow"]:LookupSequence("reloadpistol")			-- can't set layer on client model, quite buggy though
 			rate = 0.5
 		end
-		ptm_cViewModel["Shadow"]:SetPlaybackRate(rate)
-		ptm_cViewModel["Body"]:SetPlaybackRate(rate)
+		ptm_cModel["Shadow"]:SetPlaybackRate(rate)
+		ptm_cModel["Body"]:SetPlaybackRate(rate)
 		if sequence != curSeq then
-			ptm_cViewModel["Shadow"]:ResetSequence(sequence)
-			ptm_cViewModel["Body"]:ResetSequence(sequence)
+			ptm_cModel["Shadow"]:ResetSequence(sequence)
+			ptm_cModel["Body"]:ResetSequence(sequence)
 			curSeq = sequence
 			lastFrame = CurTime()
 		end
-		ptm_cViewModel["Shadow"]:FrameAdvance(CurTime() - lastFrame)			-- seems number doesn't matter
-		ptm_cViewModel["Body"]:FrameAdvance(CurTime() - lastFrame)
+		ptm_cModel["Shadow"]:FrameAdvance(CurTime() - lastFrame)			-- seems number doesn't matter
+		ptm_cModel["Body"]:FrameAdvance(CurTime() - lastFrame)
 
 		-- make the model walk
-		ptm_cViewModel["Shadow"]:SetPoseParameter("move_x", self.Owner:GetPoseParameter("move_x") * 2 - 1)		-- parameter is 0.5 to 1
-		ptm_cViewModel["Shadow"]:SetPoseParameter("move_y", self.Owner:GetPoseParameter("move_y") * 2 - 1)
-		ptm_cViewModel["Body"]:SetPoseParameter("move_x", self.Owner:GetPoseParameter("move_x") * 2 - 1)
-		ptm_cViewModel["Body"]:SetPoseParameter("move_y", self.Owner:GetPoseParameter("move_y") * 2 - 1)
+		ptm_cModel["Shadow"]:SetPoseParameter("move_x", self.Owner:GetPoseParameter("move_x") * 2 - 1)		-- parameter is 0.5 to 1
+		ptm_cModel["Shadow"]:SetPoseParameter("move_y", self.Owner:GetPoseParameter("move_y") * 2 - 1)
+		ptm_cModel["Body"]:SetPoseParameter("move_x", self.Owner:GetPoseParameter("move_x") * 2 - 1)
+		ptm_cModel["Body"]:SetPoseParameter("move_y", self.Owner:GetPoseParameter("move_y") * 2 - 1)
 		-- model aim pose
 		local mul = 30		-- use a simply multiply to control them
 		-- local spinePitch = self.Owner:GetPoseParameter("spine_pitch") * 2 - 1
-		-- ptm_cViewModel["Shadow"]:SetPoseParameter("spine_pitch", spinePitch * mul)
+		-- ptm_cModel["Shadow"]:SetPoseParameter("spine_pitch", spinePitch * mul)
 		local spineYaw = self.Owner:GetPoseParameter("spine_yaw") * 2 - 1
-		ptm_cViewModel["Shadow"]:SetPoseParameter("spine_yaw", spineYaw * mul)
-		ptm_cViewModel["Body"]:SetPoseParameter("spine_yaw", spineYaw * mul)
+		ptm_cModel["Shadow"]:SetPoseParameter("spine_yaw", spineYaw * mul)
+		ptm_cModel["Body"]:SetPoseParameter("spine_yaw", spineYaw * mul)
 		local aimPitch = self.Owner:GetPoseParameter("aim_pitch") * 2 - 1
-		ptm_cViewModel["Shadow"]:SetPoseParameter("aim_pitch", aimPitch * mul * math.Clamp(self.Owner:EyeAngles().x / 30, 1, 3) * 2)		-- flashlight
+		ptm_cModel["Shadow"]:SetPoseParameter("aim_pitch", aimPitch * mul * math.Clamp(self.Owner:EyeAngles().x / 30, 1, 3) * 2)		-- flashlight
 		local aimYaw = self.Owner:GetPoseParameter("aim_yaw") * 2 - 1
-		ptm_cViewModel["Shadow"]:SetPoseParameter("aim_yaw", aimYaw * mul)
-		ptm_cViewModel["Body"]:SetPoseParameter("aim_yaw", aimYaw * mul)
+		ptm_cModel["Shadow"]:SetPoseParameter("aim_yaw", aimYaw * mul)
+		ptm_cModel["Body"]:SetPoseParameter("aim_yaw", aimYaw * mul)
 
 	end
 
@@ -263,7 +263,7 @@ end
 function SWEP:PreDrawViewModel(vm, wep, ply)
 
 	-- body
-	if IsValid(ptm_cViewModel["Body"]) then
+	if IsValid(ptm_cModel["Body"]) then
 	
 		if self.Owner:GetForward() == Vector(1, 0, 0) then return end
 	
@@ -284,16 +284,16 @@ function SWEP:PreDrawViewModel(vm, wep, ply)
 					-- pos = self.Owner:GetPos() + dir * 128 + self.Owner:GetRight() * (4 - len * 1),
 					angle = ang
 					}
-				render.Model( settings, ptm_cViewModel["Body"] )
+				render.Model( settings, ptm_cModel["Body"] )
 				
-				local spine1 = ptm_cViewModel["Body"]:LookupBone("ValveBiped.Bip01_Spine1")
-				ptm_cViewModel["Body"]:ManipulateBoneAngles( spine1, Angle(0, -30 * len, 0) )
-				local r_upperarm = ptm_cViewModel["Body"]:LookupBone("ValveBiped.Bip01_R_UpperArm")
-				ptm_cViewModel["Body"]:ManipulateBoneAngles( r_upperarm, Angle(0, -120, 0) )
-				local l_upperarm = ptm_cViewModel["Body"]:LookupBone("ValveBiped.Bip01_L_UpperArm")
-				ptm_cViewModel["Body"]:ManipulateBoneAngles( l_upperarm, Angle(0, 0, 0) )		-- bug?
+				local spine1 = ptm_cModel["Body"]:LookupBone("ValveBiped.Bip01_Spine1")
+				ptm_cModel["Body"]:ManipulateBoneAngles( spine1, Angle(0, -30 * len, 0) )
+				local r_upperarm = ptm_cModel["Body"]:LookupBone("ValveBiped.Bip01_R_UpperArm")
+				ptm_cModel["Body"]:ManipulateBoneAngles( r_upperarm, Angle(0, -120, 0) )
+				local l_upperarm = ptm_cModel["Body"]:LookupBone("ValveBiped.Bip01_L_UpperArm")
+				ptm_cModel["Body"]:ManipulateBoneAngles( l_upperarm, Angle(0, 0, 0) )		-- bug?
 				
-				ptm_cViewModel["Body"]:DrawModel()
+				ptm_cModel["Body"]:DrawModel()
 
 			render.PopCustomClipPlane()
 		render.EnableClipping( false )

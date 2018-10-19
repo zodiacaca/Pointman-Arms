@@ -50,7 +50,7 @@ if GetConVar("PointmanDebugMultiply") == nil then
 	CreateClientConVar("PointmanDebugMultiply", "0", { FCVAR_ARCHIVE }, "")
 end
 
-ptm_cViewModel = {}
+ptm_cModel = {}
 pointman_ent = {}
 PTM_PhyBullet = {}
 PTM_PhyBulletNPC = {}
