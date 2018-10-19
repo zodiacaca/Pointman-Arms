@@ -42,7 +42,7 @@ if GetConVar("PointmanVMHands") == nil then
 end
 
 
-if GetConVar("PointmanToggleGlobal") == nil then
+if GetConVar("PointmanToggleGlobal") == nil then  // totally forgot why this is here
 	CreateClientConVar("PointmanToggleGlobal", "0", { FCVAR_ARCHIVE }, "")
 end
 
