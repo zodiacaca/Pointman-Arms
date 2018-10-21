@@ -200,7 +200,7 @@ function SWEP:ShootPhyBullet(pos, dir, aimcone, tracernum, damage)
 	bullet.Damage	= damage
 	bullet.Callback	= function(attacker, tracedata, dmginfo)
 	
-		-- self:RicochetCallback(1, tracedata, dmginfo)
+		self:RicochetCallback(1, tracedata, dmginfo)
 		
 	end
 	

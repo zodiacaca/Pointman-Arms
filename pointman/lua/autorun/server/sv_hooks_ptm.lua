@@ -135,7 +135,8 @@ function ptmBulletCrack(trStart, trEnd, tr, attacker, shotPos, shotDir, speed, s
 						bulletmiss[4] = Sound("weapons/fx/near_mono/bulletLtoR09.wav")
 						bulletmiss[5] = Sound("weapons/fx/near_mono/bulletLtoR05.wav")
 						bulletmiss[6] = Sound("weapons/fx/near_mono/bulletLtoR12.wav")
-						local soundtospeed = speed > 1020 and table.Count(bulletmiss) or math.floor(speed/170)
+						local soundtospeed = math.floor(speed/170)
+						soundtospeed = math.Clamp(soundtospeed, 1 , 6)
 						-- print(stage, dot, soundtospeed, (pos - trStart):Length()/52)
 						local volume = 45 + (128 - shorterCathetus)/128 * 50
 
