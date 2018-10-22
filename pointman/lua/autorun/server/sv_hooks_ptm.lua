@@ -116,25 +116,35 @@ function ptmBulletCrack(trStart, trEnd, tr, attacker, shotPos, shotDir, speed, s
 				local distStart = trStart:Distance(shotPos)
 				local checkA = lengthC * math.cos(rad)
 				local checkB = trEnd:Distance(trStart)
-				if shorterCathetus <= 128 and distStart < distEye and checkA < checkB then
+				if shorterCathetus <= 256 and distStart < distEye and checkA < checkB then
 
 					local pos = trStart + forward
 
 					if p:IsLineOfSightClear(pos) and forward:Length() < tr.HitPos:Distance(trStart) then
 
-						local bulletmiss = {}
-						bulletmiss[1] = Sound("weapons/fx/near_mono/bulletLtoR07.wav")
-						bulletmiss[2] = Sound("weapons/fx/near_mono/bulletLtoR13.wav")
-						bulletmiss[3] = Sound("weapons/fx/near_mono/bulletLtoR11.wav")
-						bulletmiss[4] = Sound("weapons/fx/near_mono/bulletLtoR09.wav")
-						bulletmiss[5] = Sound("weapons/fx/near_mono/bulletLtoR05.wav")
-						bulletmiss[6] = Sound("weapons/fx/near_mono/bulletLtoR12.wav")
-						local soundtospeed = math.floor(speed/170)
-						soundtospeed = math.Clamp(soundtospeed, 1 , 6)
-						-- print(stage, dot, soundtospeed, (pos - trStart):Length()/52)
-						local volume = 45 + (128 - shorterCathetus)/128 * 50
+						if shorterCathetus <= 128 then
 
-						wep:CallOnClient( "PlayCrackSound", bulletmiss[soundtospeed].." "..volume.." "..pos.x.." "..pos.y.." "..pos.z )
+							local bulletmiss = {}
+							bulletmiss[1] = Sound("weapons/fx/near_mono/bulletLtoR07.wav")
+							bulletmiss[2] = Sound("weapons/fx/near_mono/bulletLtoR13.wav")
+							bulletmiss[3] = Sound("weapons/fx/near_mono/bulletLtoR11.wav")
+							bulletmiss[4] = Sound("weapons/fx/near_mono/bulletLtoR09.wav")
+							bulletmiss[5] = Sound("weapons/fx/near_mono/bulletLtoR05.wav")
+							bulletmiss[6] = Sound("weapons/fx/near_mono/bulletLtoR12.wav")
+							local soundtospeed = math.floor(speed/170)
+							soundtospeed = math.Clamp(soundtospeed, 1 , 6)
+							-- print(stage, dot, soundtospeed, (pos - trStart):Length()/52)
+							local volume = 45 + (128 - shorterCathetus)/128 * 50
+
+							wep:CallOnClient( "PlayCrackSound", bulletmiss[soundtospeed].." "..volume.." "..pos.x.." "..pos.y.." "..pos.z )
+
+						else if speed > 340 then
+
+							local soundpath = Sound("weapons/fx/crack.wav")
+							local volume = 50 + (256 - shorterCathetus)/128 * 25
+							wep:CallOnClient( "PlayCrackSound", soundpath.." "..volume.." "..pos.x.." "..pos.y.." "..pos.z )
+
+						end
 
 					end
 				

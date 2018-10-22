@@ -210,7 +210,7 @@ end
 
 function SWEP:RicochetCallback(num, tracedata, dmginfo)
 	
-	local mat = tracedata.MatType
+	local mat = tracedata.MatType		// can't recieve MAT_SLOSH from tracedata
 	local surfaceMat = ""
 	if mat == MAT_METAL or mat == MAT_WARPSHIELD or mat == MAT_GRATE then
 		surfaceMat = "Metal"
