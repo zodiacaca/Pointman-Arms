@@ -69,14 +69,6 @@ function SWEP:CreateClientModels()
 			ptm_cModel["Mask"]:SetNoDraw(true)
 
 		end
-		
-		-- ghost
-		if not IsValid(ptm_cModel["Ghost"]) and GetConVar("PointmanToggleGlobal"):GetBool() then
-
-			ptm_cModel["Ghost"] = ClientsideModel(self.Owner:GetViewModel():GetModel(), RENDERGROUP_VIEWMODEL)
-			ptm_cModel["Ghost"]:ResetSequence(ACT_VM_DRAW)
-
-		end
 
 	end
 
@@ -185,14 +177,6 @@ function SWEP:ViewModelDrawn()
 
 			ptm_cModel["Mask"]:DrawModel()
 
-	end
-	
-	-- ghost
-	if IsValid(ptm_cModel["Ghost"]) then
-	
-		ptm_cModel["Ghost"]:SetPos(self.Owner:EyePos())
-		ptm_cModel["Ghost"]:SetAngles(self.Owner:EyeAngles())
-		
 	end
 
 end

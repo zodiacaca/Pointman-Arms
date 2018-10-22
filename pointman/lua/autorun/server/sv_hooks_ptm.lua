@@ -47,12 +47,6 @@ function Pointman_EntityTakeDamage(target, dmginfo)
 		end
 
 	end
-	
-	if GetConVar("PointmanToggleGlobal"):GetBool() and target:IsNPC() then
-	
-		dmginfo:ScaleDamage(2)
-		
-	end
 
 end
 hook.Add("EntityTakeDamage", "Pointman EntityTakeDamage", Pointman_EntityTakeDamage)

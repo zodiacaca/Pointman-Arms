@@ -470,7 +470,7 @@ function SWEP:SightConversion()
 	else
 		if CLIENT then
 			if len > self.Owner:GetWalkSpeed()/2 + 5 then
-				self.Stamina = self.Stamina + 25 * FT
+				self.Stamina = self.Stamina + 20 * FT
 				self.Exhausted = self.Exhausted + 5 * FT
 				self.Stamina = math.Clamp(self.Stamina, 1, 2750)
 				self.Exhausted = math.Clamp(self.Exhausted, 1, 2250)
