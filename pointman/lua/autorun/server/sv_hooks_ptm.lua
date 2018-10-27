@@ -122,6 +122,7 @@ function ptmBulletCrack(trStart, trEnd, tr, attacker, shotPos, shotDir, speed, s
 
 					if p:IsLineOfSightClear(pos) and forward:Length() < tr.HitPos:Distance(trStart) then
 
+						// maybe i can change the pitch of the sound
 						if shorterCathetus <= 128 then
 
 							local bulletmiss = {}
@@ -138,16 +139,17 @@ function ptmBulletCrack(trStart, trEnd, tr, attacker, shotPos, shotDir, speed, s
 
 							wep:CallOnClient( "PlayCrackSound", bulletmiss[soundtospeed].." "..volume.." "..pos.x.." "..pos.y.." "..pos.z )
 
-						else if speed > 340 then
+						elseif speed > 340 then
 
 							local soundpath = Sound("weapons/fx/crack.wav")
 							local volume = 50 + (256 - shorterCathetus)/128 * 25
+
 							wep:CallOnClient( "PlayCrackSound", soundpath.." "..volume.." "..pos.x.." "..pos.y.." "..pos.z )
 
 						end
 
 					end
-				
+
 				end
 
 			end
